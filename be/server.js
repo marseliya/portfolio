@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 
 // ✅ CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Ganti dengan port frontend kamu
+  origin: 'https://marseliya-portfolio.vercel.app', 
   credentials: true,
 }));
 
