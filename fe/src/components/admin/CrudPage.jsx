@@ -182,7 +182,7 @@ export default function CrudPage() {
       console.error(`Resource "${resource}" tidak ditemukan di apiEndpoints`);
       return null;
     }
-    return `http://localhost:3000/api/${endpoint}`;
+    return `https://portfolio-2iay-production.up.railway.app/api/${endpoint}`;
   };
 
   const fetchData = async () => {
@@ -249,8 +249,8 @@ export default function CrudPage() {
     const method = editingId ? "PUT" : "POST";
     const endpoint = apiEndpoints[resource];
     const url = editingId
-      ? `http://localhost:3000/api/${endpoint}/${editingId}`
-      : `http://localhost:3000/api/${endpoint}`;
+      ? `https://portfolio-2iay-production.up.railway.app/api/${endpoint}/${editingId}`
+      : `https://portfolio-2iay-production.up.railway.app/api/${endpoint}`;
 
     try {
       // ========== PROSES DATA SEBELUM DIKIRIM ==========

@@ -80,7 +80,7 @@ const ProjectsSection = () => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/project");
+        const response = await fetch("https://portfolio-2iay-production.up.railway.app/api/project");
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data : []);
         setProjects(translatedData);
@@ -124,7 +124,7 @@ const ProjectsSection = () => {
             {project.thumbnail ? (
               <Link to={`/project/${project.id}`}>
                 <img
-                  src={`http://localhost:3000/uploads/images/${project.thumbnail}`}
+                  src={`https://portfolio-2iay-production.up.railway.app/uploads/images/${project.thumbnail}`}
                   alt={project.judul}
                   className="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition-opacity"
                   onError={(e) => {
@@ -213,7 +213,7 @@ const CertificatesSection = () => {
     const fetchCertificates = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/certificate");
+        const response = await fetch("https://portfolio-2iay-production.up.railway.app/api/certificate");
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data : []);
         setCertificates(translatedData);
@@ -271,7 +271,7 @@ const CertificatesSection = () => {
           >
             {cert.gambar && (
               <img 
-                src={`http://localhost:3000/uploads/images/${cert.gambar}`} 
+                src={`https://portfolio-2iay-production.up.railway.app/uploads/images/${cert.gambar}`} 
                 alt={cert.nama}
                 className="w-full h-40 object-contain mb-3 hover:scale-105 transition-transform"
                 onError={(e) => {
@@ -309,7 +309,7 @@ const CertificatesSection = () => {
               ✕ {t('Close')}
             </button>
             <img 
-              src={`http://localhost:3000/uploads/images/${selectedImage}`}
+              src={`https://portfolio-2iay-production.up.railway.app/uploads/images/${selectedImage}`}
               alt="Certificate"
               className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
@@ -331,7 +331,7 @@ const ContactSection = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/profile");
+        const response = await fetch("https://portfolio-2iay-production.up.railway.app/api/profile");
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data[0] : data);
         setProfile(translatedData);
@@ -466,7 +466,7 @@ const ExperienceSection = () => {
     const fetchExperiences = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/experience");
+        const response = await fetch("https://portfolio-2iay-production.up.railway.app/api/experience");
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data : []);
         setExperiences(translatedData);

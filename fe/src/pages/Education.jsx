@@ -21,7 +21,7 @@ export default function Education() {
     const fetchEducation = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/education");
+        const response = await fetch("https://portfolio-2iay-production.up.railway.app/api/education");
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data : []);
         setEducations(translatedData);

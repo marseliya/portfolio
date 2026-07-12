@@ -52,7 +52,7 @@ export default function ProjectDetail() {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/api/project/${id}`);
+        const response = await fetch(`https://portfolio-2iay-production.up.railway.app/api/project/${id}`);
         if (!response.ok) {
           throw new Error("Project not found");
         }
@@ -107,7 +107,7 @@ export default function ProjectDetail() {
           {project.thumbnail && (
             <div className="w-full bg-gray-100 border-b border-gray-100">
               <img
-                src={`http://localhost:3000/uploads/images/${project.thumbnail}`}
+                src={`https://portfolio-2iay-production.up.railway.app/uploads/images/${project.thumbnail}`}
                 alt={project.judul}
                 className="w-full h-72 sm:h-96 md:h-[450px] lg:h-[550px] object-cover"
                 onError={(e) => {

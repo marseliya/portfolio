@@ -51,7 +51,7 @@ export default function HeroRadial() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/profile');
+        const response = await fetch('https://portfolio-2iay-production.up.railway.app/api/profile');
         const data = await response.json();
         if (data && data.length > 0) {
           setProfile(data[0]);
@@ -74,7 +74,7 @@ export default function HeroRadial() {
     if (photoPath.startsWith('http://') || photoPath.startsWith('https://')) {
       return photoPath;
     }
-    return `http://localhost:3000/uploads/profile/${photoPath}`;
+    return `https://portfolio-2iay-production.up.railway.app/uploads/profile/${photoPath}`;
   };
 
   const handleScrollTo = (id) => {

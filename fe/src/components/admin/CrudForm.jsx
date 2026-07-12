@@ -101,7 +101,7 @@ export default function CrudForm({
       return photoPath;
     }
     // Jika hanya nama file, tambahkan base URL
-    return `http://localhost:3000/uploads/profile/${photoPath}`;
+    return `https://portfolio-2iay-production.up.railway.app/uploads/profile/${photoPath}`;
   };
 
   return (

@@ -12,7 +12,7 @@ export default function About() {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/profile');
+        const response = await fetch('https://portfolio-2iay-production.up.railway.app/api/profile');
         const data = await response.json();
         
         if (data && data.length > 0) {
@@ -34,7 +34,7 @@ export default function About() {
     if (photoPath.startsWith('http://') || photoPath.startsWith('https://')) {
       return photoPath;
     }
-    return `http://localhost:3000/uploads/profile/${photoPath}`;
+    return `https://portfolio-2iay-production.up.railway.app/uploads/profile/${photoPath}`;
   };
 
   if (loading) {
