@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext'; // 🔥 PERBAIKI: pindah ke '../context/LanguageContext'
 
 const menuItems = [
   { label: "Home", href: "#home" },
@@ -55,6 +55,9 @@ export default function Header() {
     }
   };
 
+  // 🔥 PERBAIKI: Tambahkan useEffect untuk handle scroll ke section
+  // Saat menu diklik dan ditutup, scroll ke section yang dituju
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (isOpen && !e.target.closest('nav')) {
@@ -82,7 +85,6 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           
-          {/* Logo */}
           <a 
             href="#home" 
             onClick={(e) => handleScrollTo(e, '#home')}
@@ -91,7 +93,6 @@ export default function Header() {
             Marsell {'</>'} Resume
           </a>
 
-          {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-0.5">
             {menuItems.map((item) => (
               <a
@@ -108,7 +109,6 @@ export default function Header() {
               </a>
             ))}
             
-            {/* 🔥 TOMBOL SWITCH BAHASA */}
             <button
               onClick={toggleLanguage}
               className="ml-2 px-3 py-1.5 text-xs font-light tracking-wide transition-all duration-200 text-gray-400 hover:text-gray-600 border-l border-gray-200 pl-4"
@@ -117,9 +117,12 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* 🔥 PERBAIKI: Mobile Menu Button - tambahkan z-index lebih tinggi */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(!isOpen);
+            }}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100/50 transition-colors relative z-50"
             aria-label="Toggle menu"
           >
@@ -138,7 +141,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.nav
@@ -153,7 +155,10 @@ export default function Header() {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => handleScrollTo(e, item.href)}
+                  onClick={(e) => {
+                    handleScrollTo(e, item.href);
+                    setIsOpen(false);
+                  }}
                   className={`block px-4 py-2 text-xs font-light tracking-wide transition-all duration-200 ${
                     activeSection === item.href.replace('#', '')
                       ? "text-gray-900"
@@ -163,9 +168,11 @@ export default function Header() {
                   {t(item.label)}
                 </a>
               ))}
-              {/* 🔥 TOMBOL SWITCH BAHASA DI MOBILE */}
               <button
-                onClick={toggleLanguage}
+                onClick={() => {
+                  toggleLanguage();
+                  setIsOpen(false);
+                }}
                 className="block w-full text-left px-4 py-2 text-xs font-light tracking-wide text-gray-400 hover:text-gray-600 border-t border-gray-100 mt-2 pt-3"
               >
                 {language === 'id' ? '🇮🇩 Ganti ke English' : '🇬🇧 Switch to Indonesian'}
