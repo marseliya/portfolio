@@ -94,9 +94,6 @@ export default function About() {
                 <h1 className="text-3xl md:text-4xl font-light text-gray-800">
                   {profile?.nama || 'Nama'}
                 </h1>
-                <p className="text-gray-400 text-sm font-light tracking-wider mt-1">
-                  {profile?.ttl || 'Tempat, Tanggal Lahir'}
-                </p>
               </div>
 
               {/* Bio */}
