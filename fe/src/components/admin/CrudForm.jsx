@@ -101,7 +101,7 @@ export default function CrudForm({
       return photoPath;
     }
     // Jika hanya nama file, tambahkan base URL
-    return `https://portfolio-2iay-production.up.railway.app/uploads/profile/${photoPath}`;
+    return `https://porto-1vix539u.b4a.run/uploads/profile/${photoPath}`;
   };
 
   return (

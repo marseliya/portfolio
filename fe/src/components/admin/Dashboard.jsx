@@ -18,7 +18,7 @@ export default function Dashboard() {
         const endpoints = ['profile', 'education', 'experience', 'project', 'certificate', 'contact'];
         const results = await Promise.all(
           endpoints.map(async (endpoint) => {
-            const res = await fetch(`https://portfolio-2iay-production.up.railway.app/api/${endpoint}`);
+            const res = await fetch(`https://porto-1vix539u.b4a.run/api/${endpoint}`);
             const data = await res.json();
             return { [endpoint]: Array.isArray(data) ? data.length : 0 };
           })
