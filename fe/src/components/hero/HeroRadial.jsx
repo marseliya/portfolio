@@ -51,7 +51,7 @@ export default function HeroRadial() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('https://porto-1vix539u.b4a.run/api/profile');
+        const response = await fetch('https://porto-1q3zep5t.b4a.run/api/profile');
         const data = await response.json();
         if (data && data.length > 0) {
           setProfile(data[0]);
@@ -74,7 +74,7 @@ export default function HeroRadial() {
     if (photoPath.startsWith('http://') || photoPath.startsWith('https://')) {
       return photoPath;
     }
-    return `https://porto-1vix539u.b4a.run/uploads/profile/${photoPath}`;
+    return `https://porto-1q3zep5t.b4a.run/uploads/profile/${photoPath}`;
   };
 
   const handleScrollTo = (id) => {
