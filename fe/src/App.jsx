@@ -115,7 +115,6 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="py-16 px-4 max-w-6xl mx-auto">
-      <MaintenanceBanner />
       <h2 className="text-2xl font-light text-gray-800 mb-8">{t('Projects')}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project) => (
@@ -545,6 +544,7 @@ const ExperienceSection = () => {
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
+      <MaintenanceBanner />
       <Header />
       <main>
         <HeroRadial />
