@@ -12,7 +12,7 @@ export default function About() {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://porto-1q3zep5t.b4a.run/api/profile');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`);
         const data = await response.json();
         
         if (data && data.length > 0) {
@@ -34,7 +34,7 @@ export default function About() {
     if (photoPath.startsWith('http://') || photoPath.startsWith('https://')) {
       return photoPath;
     }
-    return `https://porto-1q3zep5t.b4a.run/uploads/profile/${photoPath}`;
+    return `${import.meta.env.VITE_API_URL}/uploads/profile/${photoPath}`;
   };
 
   if (loading) {

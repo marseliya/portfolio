@@ -18,7 +18,7 @@ export default function Dashboard() {
         const endpoints = ['profile', 'education', 'experience', 'project', 'certificate', 'contact'];
         const results = await Promise.all(
           endpoints.map(async (endpoint) => {
-            const res = await fetch(`https://porto-1q3zep5t.b4a.run/api/${endpoint}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/${endpoint}`);
             const data = await res.json();
             return { [endpoint]: Array.isArray(data) ? data.length : 0 };
           })

@@ -23,7 +23,7 @@ export default function Certificates() {
     const fetchCertificates = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://porto-1q3zep5t.b4a.run/api/certificate");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/certificate`);
         const data = await response.json();
         const translatedData = await translateData(Array.isArray(data) ? data : []);
         setCertificates(translatedData);
@@ -66,7 +66,7 @@ export default function Certificates() {
             >
               {cert.gambar && (
                 <img 
-                  src={`https://porto-1q3zep5t.b4a.run/uploads/images/${cert.gambar}`} 
+                  src={`${import.meta.env.VITE_API_URL}/uploads/images/${cert.gambar}`} 
                   alt={cert.nama}
                   className="w-full h-48 object-contain mb-3 hover:scale-105 transition-transform"
                   onError={(e) => {
@@ -113,7 +113,7 @@ export default function Certificates() {
               ✕ {t('Close')}
             </button>
             <img 
-              src={`https://porto-1q3zep5t.b4a.run/uploads/images/${selectedImage}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/images/${selectedImage}`}
               alt="Certificate"
               className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}

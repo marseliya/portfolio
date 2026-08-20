@@ -182,7 +182,7 @@ export default function CrudPage() {
       console.error(`Resource "${resource}" tidak ditemukan di apiEndpoints`);
       return null;
     }
-    return `https://porto-1q3zep5t.b4a.run/api/${endpoint}`;
+    return `${import.meta.env.VITE_API_URL}/api/${endpoint}`;
   };
 
   const fetchData = async () => {
@@ -249,8 +249,8 @@ export default function CrudPage() {
     const method = editingId ? "PUT" : "POST";
     const endpoint = apiEndpoints[resource];
     const url = editingId
-      ? `https://porto-1q3zep5t.b4a.run/api/${endpoint}/${editingId}`
-      : `https://porto-1q3zep5t.b4a.run/api/${endpoint}`;
+      ? `${import.meta.env.VITE_API_URL}/api/${endpoint}/${editingId}`
+      : `${import.meta.env.VITE_API_URL}/api/${endpoint}`;
 
     try {
       // ========== PROSES DATA SEBELUM DIKIRIM ==========
