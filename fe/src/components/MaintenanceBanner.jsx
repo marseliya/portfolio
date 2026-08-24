@@ -4,21 +4,19 @@ export default function MaintenanceBanner() {
   const [status, setStatus] = useState("waking");
 
   useEffect(() => {
-    const controller = new AbortController();
+    let cancelled = false;
 
-    fetch(`${import.meta.env.VITE_API_URL}/`, { signal: controller.signal })
-      .then((res) => {
-        if (res.ok) setStatus("ready");
-        else setStatus("waking");
-      })
-      .catch(() => {
-        setStatus("waking");
-      });
+    // Ping "no-cors" -- tujuannya HANYA memancing server untuk mulai bangun,
+    // bukan untuk membaca hasilnya (karena mode no-cors tidak mengizinkan kita
+    // membaca response-nya). Ini mengurangi kemungkinan request dibatalkan
+    // browser karena alasan CORS sebelum sempat sampai ke server.
+    fetch(`${import.meta.env.VITE_API_URL}/`, { mode: "no-cors" }).catch(() => {});
 
+    // Cek status sebenarnya lewat request normal, diulang tiap 5 detik
     const interval = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/`)
         .then((res) => {
-          if (res.ok) {
+          if (res.ok && !cancelled) {
             setStatus("ready");
             clearInterval(interval);
           }
@@ -27,7 +25,7 @@ export default function MaintenanceBanner() {
     }, 5000);
 
     return () => {
-      controller.abort();
+      cancelled = true;
       clearInterval(interval);
     };
   }, []);
@@ -43,8 +41,7 @@ export default function MaintenanceBanner() {
       fontSize: "14px",
     }}>
       ⏳ Server sedang "bangun" dari mode hemat daya (hosting gratis).
-      Mohon tunggu sekitar 30-60 detik, data akan otomatis muncul. 
-      Terima kasih.
+      Mohon tunggu sekitar 30–60 detik, data akan otomatis muncul.
     </div>
   );
 }
