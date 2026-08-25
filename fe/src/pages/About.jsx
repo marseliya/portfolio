@@ -3,30 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 
+import profileData from "../data/profile.json";
+
 export default function About() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const loadProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`);
-        const data = await response.json();
-        
-        if (data && data.length > 0) {
-          const translatedData = await translateData(data[0]);
+        if (profileData && profileData.length > 0) {
+          const translatedData = await translateData(profileData[0]);
           setProfile(translatedData);
         }
       } catch (error) {
-        console.error("Gagal mengambil data profile:", error);
+        console.error("Gagal memuat data profile:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProfile();
+    loadProfile();
   }, [language, translateData]);
 
   const getPhotoUrl = (photoPath) => {
@@ -34,9 +33,9 @@ export default function About() {
     if (photoPath.startsWith('http://') || photoPath.startsWith('https://')) {
       return photoPath;
     }
-    return `${import.meta.env.VITE_API_URL}/uploads/profile/${photoPath}`;
+    return `/uploads/profile/${photoPath}`;
   };
-
+  
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-4rem)]">

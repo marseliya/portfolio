@@ -12,7 +12,12 @@ import CrudPage from "./components/admin/CrudPage";
 import Certificates from "./pages/Certificates";
 import ProjectDetail from "./pages/ProjectDetail";
 import { useLanguage } from "./context/LanguageContext";
-import MaintenanceBanner from "./components/MaintenanceBanner";
+// import MaintenanceBanner from "./components/MaintenanceBanner";
+
+import profileData from "./data/profile.json";
+import projectData from "./data/project.json";
+import certificateData from "./data/certificate.json";
+import experienceData from "./data/experience.json";
 
 // ========== KOMPONEN UNTUK LANDING PAGE ==========
 const ProtectedRoute = ({ children }) => {
@@ -78,21 +83,19 @@ const ProjectsSection = () => {
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const loadProjects = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https:/api/project");
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data : []);
+        const translatedData = await translateData(projectData);
         setProjects(translatedData);
       } catch (error) {
-        console.error("Error fetching projects:", error);
-        setProjects([]);
+        console.error("Error loading projects:", error);
+        setProjects(projectData);
       } finally {
         setLoading(false);
       }
     };
-    fetchProjects();
+    loadProjects();
   }, [language, translateData]);
 
   if (loading) {
@@ -125,7 +128,7 @@ const ProjectsSection = () => {
             {project.thumbnail ? (
               <Link to={`/project/${project.id}`}>
                 <img
-                  src={`${import.meta.env.VITE_API_URL}/uploads/images/${project.thumbnail}`}
+                  src={`/uploads/images/${project.thumbnail}`}
                   alt={project.judul}
                   className="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition-opacity"
                   onError={(e) => {
@@ -211,21 +214,19 @@ const CertificatesSection = () => {
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchCertificates = async () => {
+    const loadCertificates = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/certificate`);
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data : []);
+        const translatedData = await translateData(certificateData);
         setCertificates(translatedData);
       } catch (error) {
-        console.error("Error fetching certificates:", error);
-        setCertificates([]);
+        console.error("Error loading certificates:", error);
+        setCertificates(certificateData);
       } finally {
         setLoading(false);
       }
     };
-    fetchCertificates();
+    loadCertificates();
   }, [language, translateData]);
 
   if (loading) {
@@ -272,7 +273,7 @@ const CertificatesSection = () => {
           >
             {cert.gambar && (
               <img 
-                src={`${import.meta.env.VITE_API_URL}/uploads/images/${cert.gambar}`} 
+                src={`/uploads/images/${cert.gambar}`} 
                 alt={cert.nama}
                 className="w-full h-40 object-contain mb-3 hover:scale-105 transition-transform"
                 onError={(e) => {
@@ -310,7 +311,7 @@ const CertificatesSection = () => {
               ✕ {t('Close')}
             </button>
             <img 
-              src={`${import.meta.env.VITE_API_URL}/uploads/images/${selectedImage}`}
+              src={`/uploads/images/${selectedImage}`}
               alt="Certificate"
               className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
@@ -329,21 +330,21 @@ const ContactSection = () => {
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const loadProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`);
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data[0] : data);
+        const translatedData = await translateData(
+          Array.isArray(profileData) ? profileData[0] : profileData
+        );
         setProfile(translatedData);
       } catch (error) {
-        console.error("Error fetching profile:", error);
-        setProfile(null);
+        console.error("Error loading profile:", error);
+        setProfile(Array.isArray(profileData) ? profileData[0] : profileData);
       } finally {
         setLoading(false);
       }
     };
-    fetchProfile();
+    loadProfile();
   }, [language, translateData]);
 
   if (loading) {
@@ -463,22 +464,38 @@ const ExperienceSection = () => {
   const [loading, setLoading] = useState(true);
   const { language, translateData, t } = useLanguage();
 
+  // useEffect(() => {
+  //   const fetchExperiences = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/experience`);
+  //       const data = await response.json();
+  //       const translatedData = await translateData(Array.isArray(data) ? data : []);
+  //       setExperiences(translatedData);
+  //     } catch (error) {
+  //       console.error("Error fetching experiences:", error);
+  //       setExperiences([]);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchExperiences();
+  // }, [language, translateData]);
+
   useEffect(() => {
-    const fetchExperiences = async () => {
+    const loadExperiences = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/experience`);
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data : []);
+        const translatedData = await translateData(experienceData);
         setExperiences(translatedData);
       } catch (error) {
-        console.error("Error fetching experiences:", error);
-        setExperiences([]);
+        console.error("Error loading experiences:", error);
+        setExperiences(experienceData);
       } finally {
         setLoading(false);
       }
     };
-    fetchExperiences();
+    loadExperiences();
   }, [language, translateData]);
 
   if (loading) {
@@ -544,7 +561,7 @@ const ExperienceSection = () => {
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <MaintenanceBanner />
+      {/* <MaintenanceBanner /> */}
       <Header />
       <main>
         <HeroRadial />

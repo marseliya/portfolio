@@ -101,7 +101,7 @@ export default function CrudForm({
       return photoPath;
     }
     // Jika hanya nama file, tambahkan base URL
-    return `${import.meta.env.VITE_API_URL}/uploads/profile/${photoPath}`;
+    return `/uploads/profile/${photoPath}`;
   };
 
   return (

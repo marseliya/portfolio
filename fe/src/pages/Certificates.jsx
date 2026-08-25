@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
+import certificateData from "../data/certificate.json";
+
 const formatDate = (dateString) => {
   if (!dateString) return null;
   const date = new Date(dateString);
@@ -20,23 +22,21 @@ export default function Certificates() {
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchCertificates = async () => {
+    const loadCertificates = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/certificate`);
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data : []);
+        const translatedData = await translateData(certificateData);
         setCertificates(translatedData);
       } catch (error) {
-        console.error("Error fetching certificates:", error);
-        setCertificates([]);
+        console.error("Error loading certificates:", error);
+        setCertificates(certificateData);
       } finally {
         setLoading(false);
       }
     };
-    fetchCertificates();
+    loadCertificates();
   }, [language, translateData]);
-
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-16 px-4">
@@ -66,7 +66,7 @@ export default function Certificates() {
             >
               {cert.gambar && (
                 <img 
-                  src={`${import.meta.env.VITE_API_URL}/uploads/images/${cert.gambar}`} 
+                  src={`/uploads/images/${cert.gambar}`} 
                   alt={cert.nama}
                   className="w-full h-48 object-contain mb-3 hover:scale-105 transition-transform"
                   onError={(e) => {
@@ -113,7 +113,7 @@ export default function Certificates() {
               ✕ {t('Close')}
             </button>
             <img 
-              src={`${import.meta.env.VITE_API_URL}/uploads/images/${selectedImage}`}
+              src={`/uploads/images/${selectedImage}`}
               alt="Certificate"
               className="w-full h-auto max-h-[80vh] object-contain bg-white rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}

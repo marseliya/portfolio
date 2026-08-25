@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
+import projectData from "../data/project.json";
+
 const formatDate = (dateString) => {
   if (!dateString) return null;
   const date = new Date(dateString);
@@ -48,29 +50,51 @@ export default function ProjectDetail() {
   const [error, setError] = useState(null);
   const { language, translateData, t } = useLanguage();
 
+  // useEffect(() => {
+  //   const fetchProject = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error("Project not found");
+  //       }
+  //       const data = await response.json();
+  //       const translatedData = await translateData(data);
+  //       setProject(translatedData);
+  //     } catch (error) {
+  //       console.error("Error fetching project:", error);
+  //       setError(error.message);
+  //       setProject(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchProject();
+  // }, [id, language, translateData]);
+
   useEffect(() => {
-    const fetchProject = async () => {
+    const loadProject = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/${id}`);
-        if (!response.ok) {
+        const found = projectData.find((p) => String(p.id) === String(id));
+        if (!found) {
           throw new Error("Project not found");
         }
-        const data = await response.json();
-        const translatedData = await translateData(data);
+        const translatedData = await translateData(found);
         setProject(translatedData);
       } catch (error) {
-        console.error("Error fetching project:", error);
+        console.error("Error loading project:", error);
         setError(error.message);
         setProject(null);
       } finally {
         setLoading(false);
       }
     };
-    fetchProject();
-  }, [id, language, translateData]);
+    loadProject();
+  }, [language, translateData]);
 
-  if (loading) {
+    
+    if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
@@ -107,7 +131,7 @@ export default function ProjectDetail() {
           {project.thumbnail && (
             <div className="w-full bg-gray-100 border-b border-gray-100">
               <img
-                src={`${import.meta.env.VITE_API_URL}/uploads/images/${project.thumbnail}`}
+                src={`/uploads/images/${project.thumbnail}`}
                 alt={project.judul}
                 className="w-full h-72 sm:h-96 md:h-[450px] lg:h-[550px] object-cover"
                 onError={(e) => {

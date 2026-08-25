@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
+import educationData from "../data/education.json";
+
 const formatDate = (dateString) => {
   if (!dateString) return null;
   const date = new Date(dateString);
@@ -18,23 +20,21 @@ export default function Education() {
   const { language, translateData, t } = useLanguage();
 
   useEffect(() => {
-    const fetchEducation = async () => {
+    const loadEducation = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/education`);
-        const data = await response.json();
-        const translatedData = await translateData(Array.isArray(data) ? data : []);
+        const translatedData = await translateData(educationData);
         setEducations(translatedData);
       } catch (error) {
-        console.error("Error fetching education:", error);
-        setEducations([]);
+        console.error("Error loading education:", error);
+        setEducations(educationData);
       } finally {
         setLoading(false);
       }
     };
-    fetchEducation();
+    loadEducation();
   }, [language, translateData]);
-
+  
   if (loading) {
     return (
       <section id="education" className="py-16 px-4 max-w-6xl mx-auto">
